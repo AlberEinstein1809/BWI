@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Graph
+comment1.params=edges
+comment1.target=Graph(java.util.List)
+comment2.params=graph
+comment2.target=void\ printGraph(Graph)
+numComments=3
