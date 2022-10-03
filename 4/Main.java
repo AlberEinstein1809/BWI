@@ -10,6 +10,7 @@ public class Main {
     public static int day = 60*8; 
 
     public static void main(String[] args) {
+        System.out.println("start");
         orders = new ArrayList<Order>();
         oQueue = new Queue<Order>();
         time = 0;
@@ -22,32 +23,33 @@ public class Main {
         while(time < day) {
             if(!oQueue.isEmpty()) {
 
-                if(oQueue.front().getEingangszeitpunkt() > time) {
+                int bearbeitungsdauer = oQueue.front().getBearbeitungsdauer();
 
-                    if(oQueue.front().getBearbeitungsdauer() + time > day) {
+                if(oQueue.front().getEingangszeitpunkt() < time) {
 
-                        time = time + oQueue.front().getBearbeitungsdauer();
-                        System.out.print("Auftrag in " + oQueue.front().getBearbeitungsdauer() + " bearbeitet");
+                    if(bearbeitungsdauer + time < day) {
+
+                        time = time + bearbeitungsdauer;
+                        System.out.println("Auftrag in " + bearbeitungsdauer + "min bearbeitet");
                         oQueue.dequeue();
 
                     } else {
 
-                        int timeover = -(day - time) + oQueue.front().getBearbeitungsdauer();
-                        oQueue.front().setBearbeitungsdauer(oQueue.front().getBearbeitungsdauer() - timeover);
+                        int timeover = -(day - time) + bearbeitungsdauer;
+                        oQueue.front().setBearbeitungsdauer(timeover);
+                        System.out.println("Auftrag angefangen:" + timeover + "min verbleibend");
                         time = time + (day - time);
                     }
                 } else {
-
                     time++;
                 }
             }
-            time++;
         }
     }
 
     private static void createOrders() {
-        for(int i=0;i<10;i++) {
-            oQueue.enqueue(new Order(i*40, 40));
+        for(int i=0;i<30;i++) {
+            oQueue.enqueue(new Order(i*40, 41));
         }
     }
 }
